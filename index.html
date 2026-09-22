@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2c2c2b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>測量案件時間表</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">⌖</div><div><div class="eyebrow">FIELD OPERATIONS</div><h1>測量案件時間表</h1></div></div>
+      <div class="top-actions"><button class="ghost" id="exportBtn">匯出 CSV</button><button class="primary" id="newCaseBtn">＋ 新增案件</button></div>
+    </header>
+
+    <section class="hero-card">
+      <div><p class="eyebrow accent">CASE CONTROL CENTER</p><h2>把每一件測量，安排在正確的時間。</h2><p class="subtext">集中管理收件、測量與案件分類；測量日前兩天自動標示提醒。</p></div>
+      <div class="hero-date"><span id="todayLabel"></span><strong id="todayDate"></strong></div>
+    </section>
+
+    <section class="stats" aria-label="案件摘要">
+      <div class="stat"><span>待辦案件</span><strong id="totalStat">0</strong><small>全部案件</small></div>
+      <div class="stat warn"><span>兩天內測量</span><strong id="soonStat">0</strong><small>需要優先確認</small></div>
+      <div class="stat blue"><span>本月測量</span><strong id="monthStat">0</strong><small>依測量日期計算</small></div>
+      <div class="stat green"><span>已排定分類</span><strong id="categoryStat">0</strong><small>鑑界・分割合併・建物・法院</small></div>
+    </section>
+
+    <section class="workspace">
+      <div class="toolbar"><div class="tabs"><button class="tab active" data-view="list">案件清單</button><button class="tab" data-view="calendar">行事曆</button></div><div class="filters"><input id="searchInput" type="search" placeholder="搜尋案號、地號或案件名稱"/><select id="categoryFilter"><option value="all">全部分類</option><option>鑑界</option><option>分割合併</option><option>建物案件</option><option>法院案件</option></select></div></div>
+      <div id="listView" class="view"></div>
+      <div id="calendarView" class="view hidden"></div>
+    </section>
+  </main>
+
+  <dialog id="caseDialog"><form method="dialog" id="caseForm"><div class="dialog-head"><div><p class="eyebrow accent">NEW CASE</p><h2>新增測量案件</h2></div><button class="icon-btn" value="cancel" aria-label="關閉">×</button></div><div class="form-grid"><label>案件名稱<input name="name" required placeholder="例如：中正段界址測量"/></label><label>案件分類<select name="category" required><option>鑑界</option><option>分割合併</option><option>建物案件</option><option>法院案件</option></select></label><label>收件日<input name="received" type="date" required/></label><label>測量日期<input name="survey" type="date" required/></label><label>案號<input name="caseNo" placeholder="例如：114-測-001"/></label><label>地號<input name="landNo" placeholder="例如：中正段 123-4"/></label><label class="full-field">測量地址<input name="address" placeholder="例如：台北市中正區○○路 1 號"/></label><label>界指點數<input name="points" type="number" min="0" step="1" placeholder="0"/></label><label>備註<textarea name="note" rows="3" placeholder="補充說明（選填）"></textarea></label></div><div class="reminder-note">◷ 測量日期前兩天提醒　<span>每天 09:00（台北時間）</span></div><div class="dialog-actions"><button class="ghost" value="cancel">取消</button><button class="primary" value="default">儲存案件</button></div></form></dialog>
+  <script src="app.js"></script>
+  <script>if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));</script>
+</body>
+</html>
